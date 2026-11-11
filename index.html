@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div>
+        <marquee behavior="" direction="right">
+            <h1>💟Calculate your love💟</h1>
+        </marquee>
+        <input type="text" id="name1" placeholder="Enter your name">
+        <br><br>
+        <input type="text" id="name2" placeholder="Enter your crush name"><br><br>
+        <button onclick="calculate()">calculate</button>
+
+    </div>
+    <h2 id="result"></h2>
+    <script>
+        async function calculate()
+        {
+            event.preventDefault();
+            let n1=document.getElementById("name1").value;
+            let n2=document.getElementById("name2").value;
+            let data={name1:n1,name2:n2}
+            //document.getElementById("result").innerHTML=n1+" "+n2
+            let response=await fetch("http://54.252.135.186:8000/Love",
+                {
+                    method:"POST",
+                    headers:{"Content-Type":"application/json"},
+                    body:JSON.stringify(data)
+                });
+            let result=await response.json();
+            document.getElementById('result').innerHTML=result.message
+            document.getElementById("loveBar").style.width=result.per
+        }
+
+                
+    </script>
+</body>
+</html>
